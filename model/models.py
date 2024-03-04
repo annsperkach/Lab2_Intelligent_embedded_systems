@@ -1,5 +1,20 @@
 from datetime import datetime
 from pydantic import BaseModel, field_validator
+from sqlalchemy import Table, Column, Integer, String, Float, DateTime, MetaData
+
+metadata = MetaData()
+processed_agent_data = Table(
+    "processed_agent_data",
+    metadata,
+    Column("id", Integer, primary_key=True, index=True),
+    Column("road_state", String),
+    Column("x", Float),
+    Column("y", Float),
+    Column("z", Float),
+    Column("latitude", Float),
+    Column("longitude", Float),
+    Column("timestamp", DateTime),
+)
 
 
 class GpsData(BaseModel):
