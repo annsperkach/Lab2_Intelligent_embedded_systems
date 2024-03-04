@@ -20,15 +20,20 @@ class AgentData(BaseModel):
 
     @classmethod
     @field_validator('timestamp', mode='before')
-    def check_timestamp(cls, value):
-        if isinstance(value, datetime):
-            return value
-        try:
-            return datetime.fromisoformat(value)
-        except (TypeError, ValueError):
-            raise ValueError(
-                "Invalid timestamp format. Expected ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ).")
+    from datetime import datetime
 
+class YourClassName:
+    
+    @classmethod
+    def check_timestamp(cls, value):
+        try:
+            if isinstance(value, datetime):
+                return value
+            return datetime.fromisoformat(value)
+        
+        except (TypeError, ValueError) as e:
+            # Catch specific exceptions and provide a more informative error message
+            raise ValueError(f"ERROR. Unable to parse timestamp. Reason: {str(e)}")
 
 class ProcessedAgentData(BaseModel):
     road_state: str
